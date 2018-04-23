@@ -1,12 +1,12 @@
-import java.util.Random;
+import java.util.Scanner;
 
-public class ComputerLocation implements Location{
-	
+public class PlayerLocation implements Location{
+
 	char[][] field = new char[5][5];
 	int[][] ships = new int[3][2];
 	int shipsAmount;
 	
-	public ComputerLocation() {
+	public PlayerLocation() {
 		// TODO Auto-generated constructor stub
 		setField();
 		setShips();
@@ -27,25 +27,34 @@ public class ComputerLocation implements Location{
 		}
 	}
 	
-	// Randomly generates locations for ships
+	// Generates locations for ships from user input
 	public void setShips(){
-		 Random random = new Random();
-	     for(int shipNo = 0 ; shipNo < 3 ; shipNo++){
-			 ships[shipNo][0]=random.nextInt(5);
-	         ships[shipNo][1]=random.nextInt(5);
-	         
-	        
-	         // Checks if this cell is already taken
-	         // If cell is already taken, generate other location
-	         for(int last=0 ; last < shipNo ; last++){
-	        	 while((ships[shipNo][0] == ships[last][0]) && (ships[shipNo][1] == ships[last][1])){
-	        		 ships[shipNo][0]=random.nextInt(5);
-	                 ships[shipNo][1]=random.nextInt(5);
-	             }
-	         }
-	         shipsAmount++;
-	         putShip(ships[shipNo]);
-	     }
+		System.out.println("Locate on the field 3 ships");
+		@SuppressWarnings("resource")
+		Scanner input = new Scanner(System.in);
+		showField();
+		for(int shipNo = 0; shipNo < 3; shipNo++){
+			System.out.printf("Locate on the field ship No%d.\n", shipNo + 1);
+			System.out.print("Row: ");
+			ships[shipNo][0] = input.nextInt() - 1;
+			System.out.print("Column: ");
+			ships[shipNo][1] = input.nextInt() - 1;
+			
+			// Checks if this cell is already taken
+	        // If cell is already taken, generate other location
+	        for(int last=0 ; last < shipNo ; last++){
+	        	while((ships[shipNo][0] == ships[last][0]) && (ships[shipNo][1] == ships[last][1])){
+	        		System.out.printf("Cannot place ship in cell [%d,%d], it is already used. Try other cell.", ships[shipNo][0], ships[shipNo][1]);
+	    			System.out.print("Row: ");
+	    			ships[shipNo][0] = input.nextInt() - 1;
+	    			System.out.print("Column: ");
+	    			ships[shipNo][1] = input.nextInt() - 1;
+	            }
+	        }
+	        shipsAmount++;
+	        putShip(ships[shipNo]);
+	        showField();
+		}
 	}
 	
 	// Put ship in appropriate place
@@ -90,4 +99,5 @@ public class ComputerLocation implements Location{
 		field.setShips();
 		field.showField();
 	}
+
 }

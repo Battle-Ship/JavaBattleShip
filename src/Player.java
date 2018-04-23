@@ -6,7 +6,7 @@ public class Player {
 		// TODO Auto-generated constructor stub
 	}
 	
-	// Takes a user
+	// Takes a user input and generate shot object (x, y)
 	public int[] shoot(){
 		int[] shot = new int[2];
 		@SuppressWarnings("resource")
@@ -20,7 +20,8 @@ public class Player {
 		return shot;
 	}
 	
-	public void checkShot(ComputerLocation field){
+	// Check if player hitted or missed
+	public void checkShot(Location field){
 		int[] shot = shoot();
 		int shotX = shot[0];
 		int shotY = shot[1];
@@ -35,5 +36,4 @@ public class Player {
 			field.missMark(shot);
 		}
 	}
-
 }

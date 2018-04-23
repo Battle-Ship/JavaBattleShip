@@ -2,15 +2,16 @@ import java.io.IOException;
 
 public class BattleShipGame {
 	
-	ComputerLocation field;
+	Location field;
 	Player player;
 	int attempts;
 
-	public BattleShipGame(ComputerLocation field, Player player){
+	public BattleShipGame(Location field, Player player){
 		this.field = field;
 		this.player = player;
 	}
 	
+	// Starts the game
 	public void start() throws IOException{
 		System.out.println("Game start!!!");
 		field.showField();
@@ -25,9 +26,10 @@ public class BattleShipGame {
 	}
 	
 	public static void main(String[] args) throws IOException{
-		ComputerLocation computerField = new ComputerLocation();
+		//ComputerLocation field = new ComputerLocation();
+		PlayerLocation field = new PlayerLocation();
 		Player player = new Player();
-		BattleShipGame game = new BattleShipGame(computerField, player);
+		BattleShipGame game = new BattleShipGame(field, player);
 		game.start();
 	}
 }
