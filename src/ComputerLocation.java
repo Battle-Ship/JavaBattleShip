@@ -1,14 +1,13 @@
 import java.util.Random;
 
-public class ComputerLocation implements Location{
+public class ComputerLocation extends Field implements Location{
 	
-	char[][] field = new char[5][5];
 	int[][] ships = new int[3][2];
 	int shipsAmount;
 	
 	public ComputerLocation() {
 		// TODO Auto-generated constructor stub
-		setField();
+		super();
 		setShips();
 	}
 	
@@ -16,15 +15,6 @@ public class ComputerLocation implements Location{
 		if(shipsAmount > 0)
 			return true;
 		return false;
-	}
-	
-	// Fills the field with '0'
-	public void setField(){
-		for(int row = 0; row < 5; row++){
-			for(int column = 0; column < 5; column++){
-				field[row][column] = '0';
-			}
-		}
 	}
 	
 	// Randomly generates locations for ships
@@ -61,27 +51,6 @@ public class ComputerLocation implements Location{
 		int shotY = shot[1];
 		field[shotX][shotY] = 'X';
 		shipsAmount--;
-	}
-	
-	// Mark the cell in a field with a miss-mark
-	public void missMark(int[] shot){
-		int shotX = shot[0];
-		int shotY = shot[1];
-		field[shotX][shotY] = '*';
-	}
-	
-	// Prints the field
-	public void showField(){
-		for(char[] row : field){
-			for(char cell : row){
-				System.out.print("\t" + cell);
-			}
-			System.out.println();
-		}
-	}
-	
-	public char[][] getField(){
-		return field;
 	}
 	
 	public static void main(String[] args){

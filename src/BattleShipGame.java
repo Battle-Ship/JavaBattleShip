@@ -2,34 +2,52 @@ import java.io.IOException;
 
 public class BattleShipGame {
 	
-	Location field;
-	Player player;
+	Player player1;
+	Player player2;
 	int attempts;
 
-	public BattleShipGame(Location field, Player player){
-		this.field = field;
-		this.player = player;
+	public BattleShipGame(Player player1, Player player2){
+		this.player1 = player1;
+		this.player2 = player2;
 	}
 	
 	// Starts the game
 	public void start() throws IOException{
+		String lastPlayer = "Noone";
 		System.out.println("Game start!!!");
-		field.showField();
-		while(field.hasShips()){
+		while(player1.playerField.hasShips() && player2.playerField.hasShips()){
+			
+			if(attempts % 2 == 0){
+				System.out.println("Player1 goes: ");
+				player1.opponentField.showField();
+				player1.checkShot(player2);
+				player1.opponentField.showField();
+				System.out.println("***********************************************");
+				lastPlayer = "Player1";
+			}
+			else{
+				System.out.println("Player2 goes: ");
+				player2.opponentField.showField();
+				player2.checkShot(player1);
+				player2.opponentField.showField();
+				System.out.println("***********************************************");
+				lastPlayer = "Player2";
+			}
 			attempts++;
-			player.checkShot(field);
-			field.showField();
 		}
 		System.out.println("Game Over!!!");
-		field.showField();
+		System.out.println("Winner: " + lastPlayer);
 		System.out.printf("You've made %d attemts!", attempts);
 	}
 	
 	public static void main(String[] args) throws IOException{
-		//ComputerLocation field = new ComputerLocation();
-		PlayerLocation field = new PlayerLocation();
-		Player player = new Player();
-		BattleShipGame game = new BattleShipGame(field, player);
+		System.out.println("Player1 goes: ");
+		Player player1 = new Player();
+		System.out.println("***********************************************");
+		System.out.println("Player2 goes: ");
+		Player player2 = new Player();
+		System.out.println("***********************************************");
+		BattleShipGame game = new BattleShipGame(player1, player2);
 		game.start();
 	}
 }

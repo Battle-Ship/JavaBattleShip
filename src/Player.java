@@ -1,9 +1,14 @@
 import java.util.Scanner;
 
 public class Player {
-
+	
+	PlayerLocation playerField;
+	Field opponentField;
+	
 	public Player() {
 		// TODO Auto-generated constructor stub
+		playerField = new PlayerLocation();
+		opponentField = new Field();
 	}
 	
 	// Takes a user input and generate shot object (x, y)
@@ -21,19 +26,22 @@ public class Player {
 	}
 	
 	// Check if player hitted or missed
-	public void checkShot(Location field){
+	public void checkShot(Player player2){
 		int[] shot = shoot();
 		int shotX = shot[0];
 		int shotY = shot[1];
-		if(field.getField()[shotX][shotY] == 's'){
+		if(player2.playerField.getField()[shotX][shotY] == 's'){
 			System.out.println("Hit");
-			field.hitMark(shot);
+			opponentField.hitMark(shot);
+			player2.playerField.hitMark(shot);
 		}
-		else if(field.getField()[shotX][shotY] == 'X')
-			System.out.println("Already hitted");
-		else{
+		else if(player2.playerField.getField()[shotX][shotY] == '0'){
 			System.out.println("Miss");
-			field.missMark(shot);
+			opponentField.missMark(shot);
+			player2.playerField.missMark(shot);
+		}
+		else{
+			System.out.println("Already hitted");
 		}
 	}
 }
