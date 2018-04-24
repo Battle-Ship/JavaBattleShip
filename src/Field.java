@@ -11,8 +11,8 @@ public class Field {
 
 	// Fills the field with '0'
 	public void setField(){
-		for(int row = 0; row < field.length; row++){
-			for(int column = 0; column < field.length; column++){
+		for(int row = 0; row < 10; row++){
+			for(int column = 0; column < 10; column++){
 				field[row][column] = '0';
 			}
 		}
@@ -36,13 +36,11 @@ public class Field {
 	public void showField(){
 		System.out.print(" ");
 		for(int i=1; i<=10; i++){
-		System.out.print(" | ");
-		System.out.print(i);
+			System.out.print(" | ");
+			System.out.print(i);
 		}
 		System.out.println(" | ");
-
 		int number=0;
-
 		for(char[] row : field){
 			String [] abc={"A","B","C","D","E","F","G","H","J","E"};
 			System.out.print(abc[number]);
@@ -51,12 +49,10 @@ public class Field {
 				System.out.print(" | " + cell);
 			}
 			System.out.print(" |");
-
 			System.out.println();
 			number++;
-
 		}
-	}
+}
 	
 	public char[][] getField(){
 		return field;

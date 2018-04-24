@@ -1,59 +1,64 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class PlayerLocation extends Field implements Location{
 
-	int[][] ships;
-	int shipsAmount;
+	private final int[] PATTERN = {4, 3, 3, 2, 2, 2, 1, 1, 1, 1}; // pattern for ships
+	private ArrayList<Ship> ships = new ArrayList<Ship>();
 	
 	public PlayerLocation() {
 		// TODO Auto-generated constructor stub
-		super();
-		ships = new int[3][2];
-		
+		super();		
 		setShips();
-	}
-	
-	public boolean hasShips(){
-		if(shipsAmount > 0)
-			return true;
-		return false;
 	}
 	
 	// Generates locations for ships from user input
 	public void setShips(){
-		System.out.println("Locate on the field 3 ships");
+		System.out.println("Locate on the field 10 ships");
 		@SuppressWarnings("resource")
 		Scanner input = new Scanner(System.in);
 		showField();
-		for(int shipNo = 0; shipNo < 3; shipNo++){
-			System.out.printf("Locate on the field ship No%d.\n", shipNo + 1);
-			System.out.print("Row: ");
-			ships[shipNo][0] = input.nextInt() - 1;
-			System.out.print("Column: Input ");
-			ships[shipNo][1] = input.nextInt() - 1;
-			
-			// Checks if this cell is already taken
-	        // If cell is already taken, generate other location
-	        for(int last=0 ; last < shipNo ; last++){
-	        	while((ships[shipNo][0] == ships[last][0]) && (ships[shipNo][1] == ships[last][1])){
-	        		System.out.printf("Cannot place ship in cell [%d,%d], it is already used. Try other cell.\n", ships[shipNo][0], ships[shipNo][1]);
-	    			System.out.print("Row: ");
-	    			ships[shipNo][0] = input.nextInt() - 1;
-	    			System.out.print("Column: ");
-	    			ships[shipNo][1] = input.nextInt() - 1;
-	            }
-	        }
-	        shipsAmount++;
-	        putShip(ships[shipNo]);
+		Ship ship;
+		int x, y, position;
+		for(int size : PATTERN){
+			do{
+				System.out.printf("Locate on the field ship with size %d.\n", size);
+				System.out.print("Row: ");
+				x = input.nextInt() - 1;
+				System.out.print("Column: ");
+				y = input.nextInt() - 1;
+				System.out.print("Position (0 - horizontal, 1 - vertical): ");
+				position = input.nextInt();
+				
+				ship = new Ship(x, y, size, position);
+				if(ship.isOutOfField(0, 10))
+					System.out.println("Ship is out of field");
+				else if(isOverlayOrTouch(ship))
+					System.out.println("Ship overlays or touches other ship");
+			}while(ship.isOutOfField(0, 10) || this.isOverlayOrTouch(ship));
+			ships.add(ship);
+			System.out.println(ship.toString());
+	        putShip(ship);
 	        showField();
 		}
 	}
 	
+	boolean isOverlayOrTouch(Ship ctrlShip) {
+		for (Ship ship : ships) 
+			if (ship.isOverlayOrTouch(ctrlShip)) 
+				return true;
+	    return false;
+	}
+	
 	// Put ship in appropriate place
-	public void putShip(int[] ship){
-		int shipX = ship[0];
-		int shipY = ship[1];
-		field[shipX][shipY] = 's';
+	public void putShip(Ship ship){
+		int shipX = ship.getRow();
+		int shipY = ship.getColumn();
+		int length = ship.getLength();
+		int positionY = (ship.getPosition() == 1)?  0 : 1;
+		int positionX = ship.getPosition();
+		for (int i = 0; i < length; i++)
+           field[shipX + i * positionX][shipY + i * positionY] = 's';
 	}
 	
 	// Mark the cell in a field with a hit-mark
@@ -61,7 +66,6 @@ public class PlayerLocation extends Field implements Location{
 		int shotX = shot[0];
 		int shotY = shot[1];
 		field[shotX][shotY] = 'X';
-		shipsAmount--;
 	}
 	
 	public static void main(String[] args){
@@ -69,6 +73,12 @@ public class PlayerLocation extends Field implements Location{
 		field.setField();
 		field.setShips();
 		field.showField();
+	}
+
+	@Override
+	public boolean hasShips() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
