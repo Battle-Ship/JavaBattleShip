@@ -35,7 +35,7 @@ public class PlayerLocation extends Field implements Location{
 					System.out.println("Ship is out of field");
 				else if(isOverlayOrTouch(ship))
 					System.out.println("Ship overlays or touches other ship");
-			}while(ship.isOutOfField(0, 10) || this.isOverlayOrTouch(ship));
+			}while(ship.isOutOfField(0, field.length) || this.isOverlayOrTouch(ship));
 			ships.add(ship);
 			System.out.println(ship.toString());
 	        putShip(ship);
@@ -58,7 +58,7 @@ public class PlayerLocation extends Field implements Location{
 		int positionY = (ship.getPosition() == 1)?  0 : 1;
 		int positionX = ship.getPosition();
 		for (int i = 0; i < length; i++)
-           field[shipX + i * positionX][shipY + i * positionY] = 's';
+           field[shipX + i * positionX][shipY + i * positionY] = '■';
 	}
 	
 	// Mark the cell in a field with a hit-mark
