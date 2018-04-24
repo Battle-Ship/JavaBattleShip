@@ -29,7 +29,7 @@ public class PlayerLocation extends Field implements Location{
 			System.out.printf("Locate on the field ship No%d.\n", shipNo + 1);
 			System.out.print("Row: ");
 			ships[shipNo][0] = input.nextInt() - 1;
-			System.out.print("Column: ");
+			System.out.print("Column: Input ");
 			ships[shipNo][1] = input.nextInt() - 1;
 			
 			// Checks if this cell is already taken

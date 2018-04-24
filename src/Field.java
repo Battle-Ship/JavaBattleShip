@@ -5,14 +5,14 @@ public class Field {
 	
 	public Field() {
 		// TODO Auto-generated constructor stub
-		field = new char[5][5];
+		field = new char[10][10];
 		setField();
 	}
 
 	// Fills the field with '0'
 	public void setField(){
-		for(int row = 0; row < 5; row++){
-			for(int column = 0; column < 5; column++){
+		for(int row = 0; row < field.length; row++){
+			for(int column = 0; column < field.length; column++){
 				field[row][column] = '0';
 			}
 		}
@@ -34,11 +34,27 @@ public class Field {
 	
 	// Prints the field
 	public void showField(){
+		System.out.print(" ");
+		for(int i=1; i<=10; i++){
+		System.out.print(" | ");
+		System.out.print(i);
+		}
+		System.out.println(" | ");
+
+		int number=0;
+
 		for(char[] row : field){
+			String [] abc={"A","B","C","D","E","F","G","H","J","E"};
+			System.out.print(abc[number]);
+
 			for(char cell : row){
-				System.out.print("\t" + cell);
+				System.out.print(" | " + cell);
 			}
+			System.out.print(" |");
+
 			System.out.println();
+			number++;
+
 		}
 	}
 	
