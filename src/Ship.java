@@ -4,16 +4,21 @@ public class Ship {
 
 	private ArrayList<Cell> cells = new ArrayList<Cell>();
 	int row, column, length, position;
+	boolean alive;
 	
 	Ship (int row, int column, int length, int position) {
-		for (int i = 0; i< length; i++)
-            cells.add(
-                new Cell(row + i * ((position == 1)? 0 : 1),
-                    column + i * ((position == 1)?1:0)));
-        this.row = row;;
+		//System.out.println(column);
+		for (int i = 0; i< length; i++) {
+			Cell cell = new Cell(column + i * ((position == 1)? 0 : 1),row + i * ((position == 1)? 1 : 0));
+			//System.out.println("Creating: " + cell.toString());
+            cells.add(cell);
+               
+		}
+        this.row = row;
         this.column = column;
         this.length = length;
         this.position = position;
+        alive = true;
     }
 
     // is ship outside the boundary of the field?
@@ -33,27 +38,34 @@ public class Ship {
     }
 
     boolean isOverlayOrTouchCell(Cell ctrlCell) {
-        for (Cell cell : cells)
+        for (Cell cell : cells) {
             for (int dx = -1; dx < 2; dx++)
                 for (int dy = -1; dy < 2; dy++)
                     if (ctrlCell.getRow() == cell.getRow() + dx &&
                         ctrlCell.getColumn() == cell.getColumn() + dy)
                         return true;
+        }
         return false;
     }
 
-    boolean checkHit(int x, int y) {
-        for (Cell cell : cells)
-            if (cell.checkHit(x, y))
-                return true;
-        return false;
+    public int checkHit(Shot shot) {
+        for (Cell cell : cells) {
+            if (cell.checkHit(shot.getColumn(), shot.getRow()) && cell.isAlive()) {
+            	cell.destroy();
+            	if(!hasHealth()) {
+            		destroy();
+            	}
+            	return 1;
+            }
+            else if(cell.checkHit(shot.getColumn(), shot.getRow()) && !cell.isAlive()) {
+            	return -1;
+            }
+        }
+        return 0;
     }
 
     boolean isAlive() {
-        for (Cell cell : cells)
-            if (cell.isAlive())
-                return true;
-        return false;
+       return alive;
     }
     
     public String toString(){
@@ -74,5 +86,16 @@ public class Ship {
 
 	public int getPosition() {
 		return position;
+	}
+	
+	public void destroy() {
+		alive = false;
+	}
+	public boolean hasHealth() {
+		for(Cell cell : cells) {
+			if(cell.isAlive())
+				return true;
+		}
+		return false;
 	}
 }

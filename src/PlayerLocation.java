@@ -3,11 +3,11 @@ import java.util.Scanner;
 
 public class PlayerLocation extends Field implements Location{
 
-	private final int[] PATTERN = {4, 3, 3, 2, 2, 2, 1, 1, 1, 1}; // pattern for ships
+	//private final int[] PATTERN = {4, 3, 3, 2, 2, 2, 1, 1, 1, 1}; // pattern for ships
+	private final int[] PATTERN = {1, 1};
 	private ArrayList<Ship> ships = new ArrayList<Ship>();
 	
 	public PlayerLocation() {
-		// TODO Auto-generated constructor stub
 		super();		
 		setShips();
 	}
@@ -19,25 +19,26 @@ public class PlayerLocation extends Field implements Location{
 		Scanner input = new Scanner(System.in);
 		showField();
 		Ship ship;
-		int x, y, position;
+		int column, row, position;
 		for(int size : PATTERN){
 			do{
 				System.out.printf("Locate on the field ship with size %d.\n", size);
-				System.out.print("Row: ");
-				x = input.nextInt() - 1;
 				System.out.print("Column: ");
-				y = input.nextInt() - 1;
+				column = input.nextInt() - 1;
+				System.out.print("Row: ");
+				row = input.nextInt() - 1;
+				//System.out.println(column);
 				System.out.print("Position (0 - horizontal, 1 - vertical): ");
 				position = input.nextInt();
 				
-				ship = new Ship(x, y, size, position);
-				if(ship.isOutOfField(0, 10))
+				ship = new Ship(row, column, size, position);
+				if(ship.isOutOfField(0, 9))
 					System.out.println("Ship is out of field");
 				else if(isOverlayOrTouch(ship))
 					System.out.println("Ship overlays or touches other ship");
-			}while(ship.isOutOfField(0, 10) || this.isOverlayOrTouch(ship));
+			}while(ship.isOutOfField(0, field.length) || this.isOverlayOrTouch(ship));
 			ships.add(ship);
-			System.out.println(ship.toString());
+			//System.out.println(ship.toString());
 	        putShip(ship);
 	        showField();
 		}
@@ -62,10 +63,8 @@ public class PlayerLocation extends Field implements Location{
 	}
 	
 	// Mark the cell in a field with a hit-mark
-	public void hitMark(int[] shot){
-		int shotX = shot[0];
-		int shotY = shot[1];
-		field[shotX][shotY] = 'X';
+	public void hitMark(Shot shot){
+		field[shot.getRow()][shot.getColumn()] = 'X';
 	}
 	
 	public static void main(String[] args){
@@ -74,11 +73,17 @@ public class PlayerLocation extends Field implements Location{
 		field.setShips();
 		field.showField();
 	}
+	
+	public ArrayList<Ship> getShips(){
+		return ships;
+	}
 
 	@Override
 	public boolean hasShips() {
-		// TODO Auto-generated method stub
+		for(Ship ship : ships) {
+			if(ship.isAlive())
+				return true;
+		}
 		return false;
 	}
-
 }

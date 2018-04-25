@@ -11,45 +11,54 @@ public class Field {
 
 	// Fills the field with '0'
 	public void setField(){
-		for(int row = 0; row < 10; row++){
-			for(int column = 0; column < 10; column++){
-				field[row][column] = '0';
+		for(int row = 0; row < field.length; row++){
+			for(int column = 0; column < field.length; column++){
+				field[row][column] = ' ';
 			}
 		}
 	}
 	
 	// Mark the cell in a field with a hit-mark
-	public void hitMark(int[] shot){
-		int shotX = shot[0];
-		int shotY = shot[1];
-		field[shotX][shotY] = 'X';
+	public void hitMark(Shot shot){
+		field[shot.getRow()][shot.getColumn()] = 'X';
 	}
 	
 	// Mark the cell in a field with a miss-mark
-	public void missMark(int[] shot){
-		int shotX = shot[0];
-		int shotY = shot[1];
-		field[shotX][shotY] = '*';
+	public void missMark(Shot shot){
+		field[shot.getRow()][shot.getColumn()] = '*';
 	}
 	
 	// Prints the field
 	public void showField(){
-		System.out.print(" ");
-		for(int i=1; i<=10; i++){
-			System.out.print(" | ");
-			System.out.print(i);
-		}
-		System.out.println(" | ");
-		int number=0;
-		for(char[] row : field){
-			String [] abc={"A","B","C","D","E","F","G","H","J","E"};
-			System.out.print(abc[number]);
+		
+		System.out.print("   | ");
 
+		String [] abc={"A","B","C","D","E","F","G","H","I","J"};
+		for(int i=0; i<field.length; i++){
+		System.out.print(abc[i]+" | ");
+		}
+		System.out.println();
+		System.out.println("--------------------------------------------");
+
+
+		int number=1;
+		for(char[] row : field){
+			if(number<10){
+			System.out.print(number+" ");
+			} else {
+				System.out.print(number+"");
+	
+			}
+	
 			for(char cell : row){
 				System.out.print(" | " + cell);
 			}
 			System.out.print(" |");
+		
+	
+			
 			System.out.println();
+			System.out.println("--------------------------------------------");
 			number++;
 		}
 }

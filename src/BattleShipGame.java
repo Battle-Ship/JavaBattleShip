@@ -20,7 +20,7 @@ public class BattleShipGame {
 			if(attempts % 2 == 0){
 				System.out.println("Player1 goes: ");
 				player1.opponentField.showField();
-				player1.checkShot(player2);
+				player1.makeShot(player2);
 				player1.opponentField.showField();
 				System.out.println("***********************************************");
 				lastPlayer = "Player1";
@@ -28,7 +28,7 @@ public class BattleShipGame {
 			else{
 				System.out.println("Player2 goes: ");
 				player2.opponentField.showField();
-				player2.checkShot(player1);
+				player2.makeShot(player1);
 				player2.opponentField.showField();
 				System.out.println("***********************************************");
 				lastPlayer = "Player2";
