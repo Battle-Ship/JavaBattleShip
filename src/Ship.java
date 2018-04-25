@@ -7,10 +7,10 @@ public class Ship {
 	boolean alive;
 	
 	Ship (int row, int column, int length, int position) {
-		//System.out.println(column);
+//System.out.println(column);
 		for (int i = 0; i< length; i++) {
 			Cell cell = new Cell(column + i * ((position == 1)? 0 : 1),row + i * ((position == 1)? 1 : 0));
-			//System.out.println("Creating: " + cell.toString());
+//System.out.println("Creating: " + cell.toString());
             cells.add(cell);
                
 		}
