@@ -3,8 +3,7 @@ import java.util.Scanner;
 
 public class PlayerLocation extends Field implements Location{
 
-	//private final int[] PATTERN = {4, 3, 3, 2, 2, 2, 1, 1, 1, 1}; // pattern for ships
-	private final int[] PATTERN = {1, 1};
+	private final int[] PATTERN = {4, 3, 3, 2, 2, 2, 1, 1, 1, 1};
 	private ArrayList<Ship> ships = new ArrayList<Ship>();
 	
 	public PlayerLocation() {
@@ -25,12 +24,32 @@ public class PlayerLocation extends Field implements Location{
 				System.out.printf("Locate on the field ship with size %d.\n", size);
 				System.out.print("Column: ");
 				column = input.nextInt() - 1;
+				while (!(column <10 && column > 0)) {
+					System.out.println("Wrong Column");
+					System.out.println ("Choose correct Column from 1 to 10.");
+					System.out.print("Column: ");
+					column = input.nextInt();
+				continue;
+				}
+				
 				System.out.print("Row: ");
 				row = input.nextInt() - 1;
-				//System.out.println(column);
+				while (!(row <10 && row > 0)) {
+					System.out.println("Wrong Row");
+					System.out.println ("Choose correct Row from 1 to 10.");
+					System.out.print("Row: ");
+					row = input.nextInt();
+				continue;
+				}
+				
 				System.out.print("Position (0 - horizontal, 1 - vertical): ");
 				position = input.nextInt();
-				
+				while (position !=0 && position !=1) {
+					System.out.println("Wrong position");
+					System.out.print("Choose the correct position (0 - horizontal, 1 - vertical): ");
+					position = input.nextInt();
+				continue;
+			}
 				ship = new Ship(row, column, size, position);
 				if(ship.isOutOfField(0, 9))
 					System.out.println("Ship is out of field");
