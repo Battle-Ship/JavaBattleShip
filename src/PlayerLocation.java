@@ -3,8 +3,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class PlayerLocation extends Field implements Location {
-	private final int[] PATTERN = { 4, 3, 2, 1, 1 };
-	// private final int[] PATTERN = {4, 3, 3, 2, 2, 2, 1, 1, 1, 1};
+	private final int[] PATTERN = {4, 3, 3, 2, 2, 2, 1, 1, 1, 1};
 	private ArrayList<Ship> ships = new ArrayList<Ship>();
 
 	public PlayerLocation() {
