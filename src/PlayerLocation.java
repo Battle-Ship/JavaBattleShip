@@ -59,7 +59,7 @@ public class PlayerLocation extends Field implements Location{
 		int positionY = (ship.getPosition() == 1)?  0 : 1;
 		int positionX = ship.getPosition();
 		for (int i = 0; i < length; i++)
-           field[shipX + i * positionX][shipY + i * positionY] = 's';
+           field[shipX + i * positionX][shipY + i * positionY] = '■';
 	}
 	
 	// Mark the cell in a field with a hit-mark
