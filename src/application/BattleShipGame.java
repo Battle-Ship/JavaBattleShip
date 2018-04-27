@@ -1,32 +1,32 @@
 package application;
+
 import java.io.IOException;
 
 public class BattleShipGame {
-	
+
 	Player player1;
 	Player player2;
 	int attempts;
 
-	public BattleShipGame(Player player1, Player player2){
+	public BattleShipGame(Player player1, Player player2) {
 		this.player1 = player1;
 		this.player2 = player2;
 	}
-	
+
 	// Starts the game
-	public void start() throws IOException{
+	public void start() throws IOException {
 		String lastPlayer = "Noone";
 		System.out.println("Game start!!!");
-		while(player1.playerField.hasShips() && player2.playerField.hasShips()){
-			
-			if(attempts % 2 == 0){
+		while (player1.playerField.hasShips() && player2.playerField.hasShips()) {
+
+			if (attempts % 2 == 0) {
 				System.out.println("Player1 goes: ");
 				player1.opponentField.showField();
 				player1.makeShot(player2);
 				player1.opponentField.showField();
 				System.out.println("***********************************************");
 				lastPlayer = "Player1";
-			}
-			else{
+			} else {
 				System.out.println("Player2 goes: ");
 				player2.opponentField.showField();
 				player2.makeShot(player1);
@@ -40,8 +40,8 @@ public class BattleShipGame {
 		System.out.println("Winner: " + lastPlayer);
 		System.out.printf("You've made %d attemts!", attempts);
 	}
-	
-	public static void main(String[] args) throws IOException{
+
+	public static void main(String[] args) throws IOException {
 		System.out.println("Player1 goes: ");
 		Player player1 = new Player();
 		System.out.println("***********************************************");

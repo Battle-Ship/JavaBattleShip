@@ -1,11 +1,12 @@
 package application;
+
 import java.util.ArrayList;
 
 public class Ship {
 
 	private ArrayList<Cell> cells = new ArrayList<Cell>();
 	int row, column, length, position;
-	boolean alive;
+	public boolean alive;
 
 	public Ship(int row, int column, int length, int position) {
 		// System.out.println(column);
@@ -25,14 +26,13 @@ public class Ship {
 	// is ship outside the boundary of the field?
 	public boolean isOutOfField(int bottom, int top) {
 		for (Cell cell : cells)
-			if (cell.getRow() < bottom || cell.getRow() > top ||
-					cell.getColumn() < bottom || cell.getColumn() > top) {
+			if (cell.getRow() < bottom || cell.getRow() > top || cell.getColumn() < bottom || cell.getColumn() > top) {
 				return true;
 			}
 		return false;
 	}
 
-	boolean isOverlayOrTouch(Ship checkShip) { // is ship overlay or touch other ships
+	public boolean isOverlayOrTouch(Ship checkShip) { // is ship overlay or touch other ships
 		for (Cell cell : cells)
 			if (checkShip.isOverlayOrTouchCell(cell))
 				return true;
@@ -64,7 +64,7 @@ public class Ship {
 		return 0;
 	}
 
-	boolean isAlive() {
+	public boolean isAlive() {
 		return alive;
 	}
 
@@ -100,4 +100,9 @@ public class Ship {
 		}
 		return false;
 	}
+
+	public ArrayList<Cell> getCells() {
+		return cells;
+	}
+
 }
