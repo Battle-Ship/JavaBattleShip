@@ -1,3 +1,4 @@
+package application;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -66,7 +67,7 @@ public class PlayerLocation extends Field implements Location {
 					System.out.println("Ship is out of field");
 				else if (isOverlayOrTouch(ship))
 					System.out.println("Ship overlays or touches other ship");
-			} while (ship.isOutOfField(0, field.length) || this.isOverlayOrTouch(ship));
+			} while (ship.isOutOfField(0, field.length - 1) || this.isOverlayOrTouch(ship));
 			ships.add(ship);
 			// System.out.println(ship.toString());
 			putShip(ship);
