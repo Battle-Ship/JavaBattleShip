@@ -24,8 +24,7 @@ public class ComputerLocation extends Field implements Location{
 	     for(int shipNo = 0 ; shipNo < 3 ; shipNo++){
 			 ships[shipNo][0]=random.nextInt(5);
 	         ships[shipNo][1]=random.nextInt(5);
-	         
-	        
+	         	        
 	         // Checks if this cell is already taken
 	         // If cell is already taken, generate other location
 	         for(int last=0 ; last < shipNo ; last++){

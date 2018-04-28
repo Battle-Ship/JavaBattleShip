@@ -77,7 +77,7 @@ public class BattleShipGame {
 		
 		System.out.println("Game Over!!!");
 		System.out.println("Winner: " + lastPlayer);
-		System.out.printf("They've made %d attemts!", attempts);
+		System.out.printf("They've made %d attemts!\n", attempts);
 		
 		finishGame();
 	}

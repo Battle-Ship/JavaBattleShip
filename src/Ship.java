@@ -55,7 +55,7 @@ public class Ship implements Serializable{
             	cell.destroy();
             	if(!hasHealth()) {
             		destroy();
-            		return 1;
+            		return cells.size();
             		
             	}
             	return -2;
