@@ -1,16 +1,17 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Ship {
+public class Ship implements Serializable{
 
+	private static final long serialVersionUID = -5582772825561917954L;
+	
 	private ArrayList<Cell> cells = new ArrayList<Cell>();
-	int row, column, length, position;
-	boolean alive;
+	private int row, column, length, position;
+	private boolean alive;
 	
 	Ship (int row, int column, int length, int position) {
-//System.out.println(column);
 		for (int i = 0; i< length; i++) {
 			Cell cell = new Cell(column + i * ((position == 1)? 0 : 1),row + i * ((position == 1)? 1 : 0));
-//System.out.println("Creating: " + cell.toString());
             cells.add(cell);
                
 		}
@@ -54,8 +55,10 @@ public class Ship {
             	cell.destroy();
             	if(!hasHealth()) {
             		destroy();
+            		return 1;
+            		
             	}
-            	return 1;
+            	return -2;
             }
             else if(cell.checkHit(shot.getColumn(), shot.getRow()) && !cell.isAlive()) {
             	return -1;

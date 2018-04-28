@@ -2,11 +2,12 @@ import java.util.Random;
 
 public class ComputerLocation extends Field implements Location{
 	
-	int[][] ships = new int[3][2];
-	int shipsAmount;
+	private static final long serialVersionUID = -3064550201449533910L;
 	
-	public ComputerLocation() {
-		// TODO Auto-generated constructor stub
+	private int[][] ships = new int[3][2];
+	private int shipsAmount;
+	
+	public ComputerLocation(String player) {
 		super();
 		setShips();
 	}
@@ -54,7 +55,7 @@ public class ComputerLocation extends Field implements Location{
 	}
 	
 	public static void main(String[] args){
-		ComputerLocation field = new ComputerLocation();
+		ComputerLocation field = new ComputerLocation("name");
 		field.setField();
 		field.setShips();
 		field.showField();
