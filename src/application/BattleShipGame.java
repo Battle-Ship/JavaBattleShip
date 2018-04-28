@@ -13,6 +13,8 @@ public class BattleShipGame {
 		this.player2 = player2;
 	}
 	
+	
+	
 	// Starts the game
 	public void start() throws IOException, ClassNotFoundException, InterruptedException{
 		String lastPlayer = "Noone";
