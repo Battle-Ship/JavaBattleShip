@@ -1,7 +1,7 @@
-
+package application;
 
 public interface Location {
-	
+
 	public boolean hasShips();
 
 	public void setField();

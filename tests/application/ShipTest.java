@@ -1,21 +1,22 @@
+package application;
 
-
-
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 
 import org.junit.Test;
 
+import application.Cell;
+import application.Field;
+import application.Ship;
+import application.Shot;
 
-
-class ShipTest {
+public class ShipTest {
 
 	Field field;
 
 	@Test
-	void testShipOutOfBounds() {
+	public void testShipOutOfBounds() {
 		field = new Field();
 		// Testing a legit ship
 
@@ -41,7 +42,7 @@ class ShipTest {
 	}
 
 	@Test
-	void testShipsOverlaping() {
+	public void testShipsOverlaping() {
 		Ship ship4 = new Ship(2, 2, 4, 0);
 		Ship ship5 = new Ship(2, 2, 3, 1);
 		if (!ship4.isOverlayOrTouch(ship5))
@@ -50,7 +51,7 @@ class ShipTest {
 	}
 
 	@Test
-	void testCheckHit() {
+	public void testCheckHit() {
 		Ship ship6 = new Ship(2, 2, 4, 0);
 		Shot shot = new Shot(2, 2);
 		ship6.checkHit(shot);
@@ -66,8 +67,8 @@ class ShipTest {
 		}
 	}
 
-	@Test
-	void test() {
-		fail("Not yet implemented");
-	}
+	// @Test
+	// public void test() {
+	// fail("Not yet implemented");
+	// }
 }
