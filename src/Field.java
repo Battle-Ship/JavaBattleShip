@@ -1,7 +1,11 @@
 
-public class Field {
+import java.io.Serializable;
+
+public class Field implements Serializable{
 	
-	char[][] field;
+	private static final long serialVersionUID = 8760903066930786698L;
+	
+	protected char[][] field;
 	
 	public Field() {
 		// TODO Auto-generated constructor stub
@@ -17,6 +21,13 @@ public class Field {
 			}
 		}
 	}
+	public String arrayToString() {
+		String s = "";
+		for(int i = 0; i<10;i++)
+			for(int k=0;k<10;k++)
+				s=s+field[i][k]+", ";
+		return s;
+	}
 	
 	// Mark the cell in a field with a hit-mark
 	public void hitMark(Shot shot){
@@ -26,6 +37,10 @@ public class Field {
 	// Mark the cell in a field with a miss-mark
 	public void missMark(Shot shot){
 		field[shot.getRow()][shot.getColumn()] = '*';
+	}
+	
+	public void destroyMark(Shot shot){
+		field[shot.getRow()][shot.getColumn()] = '#';
 	}
 	
 	// Prints the field
@@ -54,9 +69,7 @@ public class Field {
 				System.out.print(" | " + cell);
 			}
 			System.out.print(" |");
-		
-	
-			
+
 			System.out.println();
 			System.out.println("--------------------------------------------");
 			number++;

@@ -1,5 +1,9 @@
 
-public class Cell {
+import java.io.Serializable;
+
+public class Cell implements Serializable{
+
+	private static final long serialVersionUID = 4887822741133733754L;
 
 	private int row, column;
 	private boolean alive;
@@ -11,8 +15,13 @@ public class Cell {
 		alive = true;
 	}
 	
-	int getRow() { return row; }
-	int getColumn() { return column; }
+	int getRow() {
+		return row;
+	}
+
+	int getColumn() {
+		return column;
+	}
 	
 	boolean checkHit(int column, int row) {
 		if (this.column == column && this.row == row) {
@@ -24,7 +33,8 @@ public class Cell {
 	public void destroy() {
 		alive = false;
 	}
-	boolean isAlive() {
+
+	public boolean isAlive() {
 	        return alive;
 	}
 	

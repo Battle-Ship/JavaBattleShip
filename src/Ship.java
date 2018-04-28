@@ -1,13 +1,16 @@
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Ship {
+public class Ship implements Serializable{
+
+	private static final long serialVersionUID = -5582772825561917954L;
 
 	private ArrayList<Cell> cells = new ArrayList<Cell>();
 	int row, column, length, position;
-	boolean alive;
+	public boolean alive;
 	
 	Ship (int row, int column, int length, int position) {
-//System.out.println(column);
 		for (int i = 0; i< length; i++) {
 			Cell cell = new Cell(column + i * ((position == 1)? 0 : 1),row + i * ((position == 1)? 1 : 0));
 //System.out.println("Creating: " + cell.toString());
@@ -22,15 +25,16 @@ public class Ship {
     }
 
     // is ship outside the boundary of the field?
-    boolean isOutOfField(int bottom, int top) {
+	public boolean isOutOfField(int bottom, int top) {
         for (Cell cell : cells)
             if (cell.getRow() < bottom || cell.getRow() > top ||
                 cell.getColumn() < bottom || cell.getColumn() > top)
                 return true;
-        return false;
-    }
 
-    boolean isOverlayOrTouch(Ship checkShip) { // is ship overlay or touch other ships
+        return false;
+	}
+
+	public boolean isOverlayOrTouch(Ship checkShip) { // is ship overlay or touch other ships
         for (Cell cell : cells)
             if (checkShip.isOverlayOrTouchCell(cell))
                 return true;
@@ -54,22 +58,25 @@ public class Ship {
             	cell.destroy();
             	if(!hasHealth()) {
             		destroy();
+            		return 1;
+            		
             	}
-            	return 1;
+            	return -2;
             }
-            else if(cell.checkHit(shot.getColumn(), shot.getRow()) && !cell.isAlive()) {
+            else if (cell.checkHit(shot.getColumn(), shot.getRow()) && !cell.isAlive()) {
             	return -1;
             }
         }
         return 0;
     }
 
-    boolean isAlive() {
+	public boolean isAlive() {
        return alive;
     }
     
     public String toString(){
-    	return "row: " + Integer.toString(row) + " column: " + Integer.toString(column) + " len: " + Integer.toString(length) + " pos: " + Integer.toString(position);
+		return "row: " + Integer.toString(row) + " column: " + Integer.toString(column) + " len: "
+				+ Integer.toString(length) + " pos: " + Integer.toString(position);
     }
 
 	public int getRow() {
@@ -91,6 +98,7 @@ public class Ship {
 	public void destroy() {
 		alive = false;
 	}
+
 	public boolean hasHealth() {
 		for(Cell cell : cells) {
 			if(cell.isAlive())
@@ -98,4 +106,9 @@ public class Ship {
 		}
 		return false;
 	}
+
+	public ArrayList<Cell> getCells() {
+		return cells;
+	}
+
 }

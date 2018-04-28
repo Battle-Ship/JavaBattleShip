@@ -1,9 +1,14 @@
+
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class PlayerLocation extends Field implements Location {
-	private final int[] PATTERN = {4, 3, 3, 2, 2, 2, 1, 1, 1, 1};
+public class PlayerLocation extends Field implements Location, Serializable{
+
+	private static final long serialVersionUID = 5456343159124430963L;
+	
+	private final int[] PATTERN = {4, 3, 3, 2, 2, 2, 1, 1, 1, 1}; // pattern for ships
+	//private final int[] PATTERN = {2, 1}; // pattern for ships
 	private ArrayList<Ship> ships = new ArrayList<Ship>();
 
 	public PlayerLocation() {
@@ -13,7 +18,7 @@ public class PlayerLocation extends Field implements Location {
 
 	// Generates locations for ships from user input
 	public void setShips() {
-		System.out.println("Locate on the field 10 ships");
+		System.out.println("Locate on the field " + PATTERN.length + " ships");
 		@SuppressWarnings("resource")
 		Scanner input = new Scanner(System.in);
 		showField();
@@ -58,17 +63,17 @@ public class PlayerLocation extends Field implements Location {
 					stringPosition = input.nextLine();
 					
 					position = stringToNumber(stringPosition, "Position: ");
-				}
-				
+				}		
 				
 				ship = new Ship(row, column, size, position);
 				if (ship.isOutOfField(0, 9))
 					System.out.println("Ship is out of field");
 				else if (isOverlayOrTouch(ship))
 					System.out.println("Ship overlays or touches other ship");
-			} while (ship.isOutOfField(0, field.length) || this.isOverlayOrTouch(ship));
+				
+			} while(ship.isOutOfField(0, 9) || this.isOverlayOrTouch(ship));
+			
 			ships.add(ship);
-			// System.out.println(ship.toString());
 			putShip(ship);
 			showField();
 		}
@@ -119,21 +124,9 @@ public class PlayerLocation extends Field implements Location {
 	public void hitMark(Shot shot) {
 		field[shot.getRow()][shot.getColumn()] = 'X';
 	}
-/*
-	public static void main(String[] args) {
-		ComputerLocation field = new ComputerLocation();
-		String test = "00011200";
-		try {
-			Integer.parseInt(test);
-			System.out.println("number");
-		} catch (Exception e) {
-			System.out.println("not number");
-		}
-		System.exit(0);
-		*/
 	
 	public static void main(String[] args){
-		ComputerLocation field = new ComputerLocation();
+		ComputerLocation field = new ComputerLocation("name");
 		field.setField();
 		field.setShips();
 		field.showField();

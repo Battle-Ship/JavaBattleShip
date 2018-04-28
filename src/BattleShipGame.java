@@ -1,10 +1,11 @@
+
 import java.io.IOException;
 
 public class BattleShipGame {
 	
-	Player player1;
-	Player player2;
-	int attempts;
+	private Player player1;
+	private Player player2;
+	private int attempts;
 
 	public BattleShipGame(Player player1, Player player2){
 		this.player1 = player1;
@@ -12,42 +13,83 @@ public class BattleShipGame {
 	}
 	
 	// Starts the game
-	public void start() throws IOException{
+	public void start() throws IOException, ClassNotFoundException, InterruptedException{
 		String lastPlayer = "Noone";
 		System.out.println("Game start!!!");
-		while(player1.playerField.hasShips() && player2.playerField.hasShips()){
-			
+		sendMessage("\nGame Start!!!");
+		while (player1.getPlayerField().hasShips() && player2.getPlayerField().hasShips()){
 			if(attempts % 2 == 0){
+				player2.sendMessage("\nOpponent is shooting");
 				System.out.println("Player1 goes: ");
-				player1.opponentField.showField();
-				player1.makeShot(player2);
-				player1.opponentField.showField();
+				player1.makeShot();
+				Shot shot = (Shot) player1.readObject();
+				int result = player1.checkShot(shot);
+				if(result == -2){
+					player2.sendMessage("\nOpponent hitted!");
+					player2.markOpponentShot("HIT", shot);
+				}
+				else if(result == 0){
+					player2.sendMessage("\nOpponent missed!");
+					player2.markOpponentShot("MISS", shot);
+				}
+				else if(result == -1)
+					player2.sendMessage("\nOpponent is idiot! He shooted where he already has shooted!");
+				else {
+					player2.sendMessage("\nOpponent sunk your ship with size " + result + "!");
+					player1.sendMessage("\nYou've sunk opponent ship with size " + result + "!\n");
+					player2.markOpponentShot("DESTROY", shot);
+				}
+				player1.writeField();
 				System.out.println("***********************************************");
-				lastPlayer = "Player1";
+				lastPlayer = player1.getNick();
 			}
 			else{
+				player1.sendMessage("\nOpponent is shooting");
 				System.out.println("Player2 goes: ");
-				player2.opponentField.showField();
-				player2.makeShot(player1);
-				player2.opponentField.showField();
+				player2.makeShot();
+				Shot shot = (Shot) player2.readObject();
+				int result = player2.checkShot(shot);
+				if(result == -2){
+					player1.sendMessage("\nOpponent hitted!");
+					player1.markOpponentShot("HIT", shot);
+				}
+				else if(result == 0){
+					player1.sendMessage("\nOpponent missed!");
+					player1.markOpponentShot("MISS", shot);
+				}
+				else if(result == -1)
+					player1.sendMessage("\nOpponent is idiot! He shooted where he already has shooted!");
+				else {
+					player1.sendMessage("\nOpponent sunk your ship with size " + result + "!");
+					player2.sendMessage("\nYou've sunk opponent ship with size " + result + "!\n");
+					player1.markOpponentShot("DESTROY", shot);
+				}
+				player2.writeField();
 				System.out.println("***********************************************");
-				lastPlayer = "Player2";
+				lastPlayer = player2.getNick();
 			}
 			attempts++;
 		}
+		sendMessage("\n*******************************************************************************");
+		sendMessage("\nGame Over!!!\nWinner: " + lastPlayer);
+		player1.writeField();
+		player2.writeField();
+		sendMessage("\nWere made " + Integer.toString(attempts) + " shots!\n");
+		
 		System.out.println("Game Over!!!");
 		System.out.println("Winner: " + lastPlayer);
-		System.out.printf("You've made %d attemts!", attempts);
+		System.out.printf("They've made %d attemts!", attempts);
+		
+		finishGame();
 	}
 	
-	public static void main(String[] args) throws IOException{
-		System.out.println("Player1 goes: ");
-		Player player1 = new Player();
-		System.out.println("***********************************************");
-		System.out.println("Player2 goes: ");
-		Player player2 = new Player();
-		System.out.println("***********************************************");
-		BattleShipGame game = new BattleShipGame(player1, player2);
-		game.start();
+	public void sendMessage(String message) throws IOException {
+		player1.sendMessage(message);
+		player2.sendMessage(message);
+	}
+	
+	public void finishGame() throws IOException {
+		player1.finishGame();
+		player2.finishGame();
 	}
 }
