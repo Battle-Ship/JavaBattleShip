@@ -1,9 +1,12 @@
+package application;
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class PlayerLocation extends Field implements Location {
-	private final int[] PATTERN = {4, 3, 3, 2, 2, 2, 1, 1, 1, 1};
+	private final int[] PATTERN = { 1 };
+	// private final int[] PATTERN = {4, 3, 3, 2, 2, 2, 1, 1, 1, 1};
 	private ArrayList<Ship> ships = new ArrayList<Ship>();
 
 	public PlayerLocation() {
@@ -18,62 +21,61 @@ public class PlayerLocation extends Field implements Location {
 		Scanner input = new Scanner(System.in);
 		showField();
 		Ship ship;
-		//int column, row, position
+		// int column, row, position
 		String stringColumn, stringRow, stringPosition;
 		for (int size : PATTERN) {
 			do {
 				System.out.printf("Locate on the field ship with size %d.\n", size);
 				System.out.print("Column: ");
 				stringColumn = input.nextLine();
-					
-					int column = stringToNumber(stringColumn, "Column") - 1;
-			
+
+				int column = stringToNumber(stringColumn, "Column") - 1;
+
 				while (!(column < 10 && column > -1)) {
 					System.out.println("Wrong Column");
 					System.out.println("Choose Column from 1 to 10.");
 					System.out.print("Column: ");
 					stringColumn = input.nextLine();
-					
+
 					column = stringToNumber(stringColumn, "Column") - 1;
 				}
 
 				System.out.print("Row: ");
 				stringRow = input.nextLine();
-					int row = stringToNumber(stringRow, "Row") - 1;
+				int row = stringToNumber(stringRow, "Row") - 1;
 				while (!(row < 10 && row > -1)) {
 					System.out.println("Wrong Row");
 					System.out.println("Choose Row from 1 to 10.");
 					System.out.print("Row: ");
 					stringRow = input.nextLine();
-					
+
 					row = stringToNumber(stringRow, "Row") - 1;
 				}
 
 				System.out.print("Position (0 - horizontal, 1 - vertical): ");
 				stringPosition = input.nextLine();
-					int position = stringToNumber(stringPosition, "Position: ");
+				int position = stringToNumber(stringPosition, "Position: ");
 				while (position != 0 && position != 1) {
 					System.out.println("Wrong position");
 					System.out.print("Choose the correct position (0 - horizontal, 1 - vertical): ");
 					stringPosition = input.nextLine();
-					
+
 					position = stringToNumber(stringPosition, "Position: ");
 				}
-				
-				
+
 				ship = new Ship(row, column, size, position);
 				if (ship.isOutOfField(0, 9))
 					System.out.println("Ship is out of field");
 				else if (isOverlayOrTouch(ship))
 					System.out.println("Ship overlays or touches other ship");
-			} while (ship.isOutOfField(0, field.length) || this.isOverlayOrTouch(ship));
+			} while (ship.isOutOfField(0, field.length - 1) || this.isOverlayOrTouch(ship));
 			ships.add(ship);
 			// System.out.println(ship.toString());
 			putShip(ship);
 			showField();
 		}
 	}
-	
+
 	public boolean isNumber(String value) {
 		try {
 			Integer.parseInt(value);
@@ -82,20 +84,19 @@ public class PlayerLocation extends Field implements Location {
 			return false;
 		}
 	}
-	
+
 	public int stringToNumber(String s, String name) {
 		@SuppressWarnings("resource")
 		Scanner input = new Scanner(System.in);
-		while (!isNumber(s)){
-			System.out.println ("Enter a number");
+		while (!isNumber(s)) {
+			System.out.println("Enter a number");
 			System.out.print(name + ": ");
 			s = input.nextLine();
-			}
-		
+		}
+
 		int column = Integer.parseInt(s);
 		return column;
 	}
-	
 
 	boolean isOverlayOrTouch(Ship ctrlShip) {
 		for (Ship ship : ships)
@@ -119,20 +120,14 @@ public class PlayerLocation extends Field implements Location {
 	public void hitMark(Shot shot) {
 		field[shot.getRow()][shot.getColumn()] = 'X';
 	}
-/*
+	/*
+	 * public static void main(String[] args) { ComputerLocation field = new
+	 * ComputerLocation(); String test = "00011200"; try { Integer.parseInt(test);
+	 * System.out.println("number"); } catch (Exception e) {
+	 * System.out.println("not number"); } System.exit(0);
+	 */
+
 	public static void main(String[] args) {
-		ComputerLocation field = new ComputerLocation();
-		String test = "00011200";
-		try {
-			Integer.parseInt(test);
-			System.out.println("number");
-		} catch (Exception e) {
-			System.out.println("not number");
-		}
-		System.exit(0);
-		*/
-	
-	public static void main(String[] args){
 		ComputerLocation field = new ComputerLocation();
 		field.setField();
 		field.setShips();
@@ -151,6 +146,5 @@ public class PlayerLocation extends Field implements Location {
 		}
 		return false;
 	}
-
 
 }
