@@ -43,6 +43,22 @@ public class Field implements Serializable {
 
 	public void destroyMark(Shot shot) {
 		field[shot.getRow()][shot.getColumn()] = '#';
+		for (int i = -1; i < 2; i++) {
+			if (i == 0)
+				continue;
+			if ((shot.getRow() + i) >= 0 && (shot.getRow() + i) < 10) {
+				if (field[shot.getRow() + i][shot.getColumn()] == 'X') {
+					Shot newShot = new Shot(shot.getColumn(), shot.getRow() + i);
+					destroyMark(newShot);
+				}
+			}
+			if ((shot.getColumn() + i) >= 0 && (shot.getColumn() + i) < 10) {
+				if (field[shot.getRow()][shot.getColumn() + i] == 'X') {
+					Shot newShot = new Shot(shot.getColumn() + 1, shot.getRow());
+					destroyMark(newShot);
+				}
+			}
+		}
 	}
 
 	// Prints the field
