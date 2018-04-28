@@ -1,11 +1,13 @@
+import java.io.Serializable;
 
-public class Cell {
+public class Cell implements Serializable{
 
+	private static final long serialVersionUID = 4887822741133733754L;
+	
 	private int row, column;
 	private boolean alive;
 	
 	public Cell(int column, int row) {
-		//System.out.println("Cell: column: " + column + " row: " + row);
 		this.row = row;
 		this.column = column;
 		alive = true;
