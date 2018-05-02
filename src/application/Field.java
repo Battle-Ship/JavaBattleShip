@@ -66,7 +66,7 @@ public class Field implements Serializable {
 
 		System.out.print("   | ");
 
-		String[] abc = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J" };
+		String[] abc = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
 		for (int i = 0; i < field.length; i++) {
 			System.out.print(abc[i] + " | ");
 		}
